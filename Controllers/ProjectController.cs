@@ -1,3 +1,4 @@
+using Eytec.API.Data;
 using Eytec.API.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -5,12 +6,12 @@ namespace Eytec.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProjectsController : ControllerBase
+    public class ProjectsController : Controller
     {
         private readonly IProjectRepository _projectRepository;
 
         public ProjectsController(IProjectRepository projectRepository)
-        {
+        { 
             _projectRepository = projectRepository;
         }
 
