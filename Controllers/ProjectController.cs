@@ -11,7 +11,7 @@ namespace Eytec.API.Controllers
         private readonly IProjectRepository _projectRepository;
 
         public ProjectsController(IProjectRepository projectRepository)
-        { 
+        {
             _projectRepository = projectRepository;
         }
 
@@ -45,12 +45,7 @@ namespace Eytec.API.Controllers
                 return BadRequest();
             }
 
-            var updatedProject = _projectRepository.Update(project);
-            if (updatedProject == null)
-            {
-                return BadRequest();
-            }
-
+            _projectRepository.Update(project);
             return NoContent();
         }
 

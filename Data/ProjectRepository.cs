@@ -1,33 +1,51 @@
 ﻿using Eytec.API.Model;
+using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 
 namespace Eytec.API.Data
 {
-    internal class ProjectRepository : IProjectRepository
+    public class ProjectRepository : IProjectRepository
     {
-        private readonly IProjectRepository _projectRepository;
-        public ProjectRepository(IProjectRepository projectRepository)
+        private readonly ApplicationDbContext _context;
+
+        public ProjectRepository(ApplicationDbContext context)
         {
-            _projectRepository = projectRepository;
+            _context = context;
+        }
+
+        public IEnumerable<ProjectModel> GetAll()
+        {
+            return _context.Projects;
+        }
+
+        public ProjectModel Get(int id)
+        {
+            return _context.Projects.Find(id);
+        }
+
+        public void Create(ProjectModel project)
+        {
+            _context.Projects.Add(project);
+        }
+
+        public void Update(ProjectModel project)
+        {
+            _context.Entry(project).State = EntityState.Modified;
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var project = _context.Projects.Find(id);
+
+            if (project != null)
+            {
+                _context.Projects.Remove(project);
+            }
         }
 
-        public object? Get(int Id)
+        public bool ProjectExists(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public object? GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public object Update(ProjectModel project)
-        {
-            throw new NotImplementedException();
+            return _context.Projects.Any(p => p.Id == id);
         }
     }
 }

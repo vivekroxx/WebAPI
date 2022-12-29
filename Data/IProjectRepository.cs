@@ -4,9 +4,10 @@ namespace Eytec.API.Data
 {
     public interface IProjectRepository
     {
-        void Delete(int id);
-        object? GetAll();
-        object? Get(int Id);
-        object Update(ProjectModel project);
+        public IEnumerable<ProjectModel> GetAll();
+        public ProjectModel Get(int Id);
+        public void Update(ProjectModel project);
+        public void Create(ProjectModel project);
+        public void Delete(int id);
     }
 }
