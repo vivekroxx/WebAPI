@@ -1,6 +1,6 @@
-﻿using Eytec.API.Model;
+﻿using WebAPI.Model;
 
-namespace Eytec.API.Request
+namespace WebAPI.Request
 {
     public interface IProjectRepository
     {

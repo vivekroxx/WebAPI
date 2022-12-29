@@ -1,6 +1,6 @@
-using Eytec.API.Data;
-using Eytec.API.Request;
 using Microsoft.EntityFrameworkCore;
+using WebAPI.Data;
+using WebAPI.Request;
 
 var builder = WebApplication.CreateBuilder(args);
 

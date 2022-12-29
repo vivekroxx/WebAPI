@@ -1,4 +1,4 @@
-namespace Eytec.API.Model
+namespace WebAPI.Model
 {
     public class ProjectModel : ProjectEditModel
     {

@@ -1,9 +1,8 @@
-﻿using Eytec.API.Data;
-using Eytec.API.Model;
-using Microsoft.EntityFrameworkCore;
-using OfficeOpenXml;
+﻿using Microsoft.EntityFrameworkCore;
+using WebAPI.Data;
+using WebAPI.Model;
 
-namespace Eytec.API.Request
+namespace WebAPI.Request
 {
     public class ProjectRepository : IProjectRepository
     {
@@ -16,8 +15,12 @@ namespace Eytec.API.Request
 
         public IEnumerable<ProjectModel> GetAll()
         {
-            var listt = _db.Projects.ToList();
-            return listt;
+            var projectList = _db.Projects.ToList();
+            if (!projectList.Any())
+            {
+                return Enumerable.Empty<ProjectModel>();
+            }
+            return projectList;
         }
 
         public ProjectModel Get(int id)

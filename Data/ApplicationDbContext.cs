@@ -1,7 +1,7 @@
-﻿using Eytec.API.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using WebAPI.Model;
 
-namespace Eytec.API.Data
+namespace WebAPI.Data
 {
     public class ApplicationDbContext : DbContext
     {

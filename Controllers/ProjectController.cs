@@ -1,8 +1,8 @@
-using Eytec.API.Model;
-using Eytec.API.Request;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Model;
+using WebAPI.Request;
 
-namespace Eytec.API.Controllers
+namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
