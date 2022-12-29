@@ -1,5 +1,5 @@
-using Eytec.API.Data;
 using Eytec.API.Model;
+using Eytec.API.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eytec.API.Controllers
@@ -30,23 +30,43 @@ namespace Eytec.API.Controllers
             var project = _projectRepository.Get(id);
             if (project == null)
             {
-                return NotFound();
+                return NotFound($"No Project Exist with id : {id}");
             }
             return Ok(project);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult Put(int id, [FromBody] ProjectModel project)
         {
-            if (project == null || project.Id != id)
+            if (ModelState.IsValid)
             {
-                return BadRequest();
-            }
+                if (project == null || project.Id != id)
+                {
+                    return NotFound("Cannot Update the Project Details");
+                }
 
-            _projectRepository.Update(project);
-            return NoContent();
+                _projectRepository.Update(project);
+            }
+            return Ok("Updated");
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult Post([FromBody] ProjectEditModel project)
+        {
+            if (ModelState.IsValid)
+            {
+                if (project == null)
+                {
+                    return BadRequest("Project Cannot Created");
+                }
+
+                _projectRepository.Create(project);
+            }
+            return Ok("Project Created");
         }
 
         [HttpDelete("{id}")]
@@ -54,13 +74,13 @@ namespace Eytec.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult Delete(int id)
         {
-            //if (!_projectRepository.Exists(id))
-            //{
-            //    return NotFound();
-            //}
+            if (!_projectRepository.ProjectExists(id))
+            {
+                return NotFound($"No Projects Exist with id : {id}");
+            }
 
             _projectRepository.Delete(id);
-            return NoContent();
+            return Ok("Project Deleted SuccessFully");
         }
     }
 }
