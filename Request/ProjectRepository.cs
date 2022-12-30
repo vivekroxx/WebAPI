@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebAPI.Data;
 using WebAPI.Model;
+using WebAPI.Request.Interface;
 
 namespace WebAPI.Request
 {

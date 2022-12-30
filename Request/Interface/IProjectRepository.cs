@@ -1,6 +1,6 @@
 ﻿using WebAPI.Model;
 
-namespace WebAPI.Request
+namespace WebAPI.Request.Interface
 {
     public interface IProjectRepository
     {
