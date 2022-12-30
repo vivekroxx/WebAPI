@@ -33,12 +33,12 @@ namespace WebAPI.Request
         {
             var newProject = new ProjectModel()
             {
-                Name = project.Name,
-                Code = project.Code,
-                StartDate = project.StartDate,
-                EndDate = project.EndDate,
-                NoOfTasks = project.NoOfTasks,
-                Status = project.Status
+                Name = project.Project.Name,
+                Code = project.Project.Code,
+                StartDate = project.Project.StartDate,
+                EndDate = project.Project.EndDate,
+                NoOfTasks = project.Project.NoOfTasks,
+                StatusID = 0
             };
 
             _db.Projects.Add(newProject);

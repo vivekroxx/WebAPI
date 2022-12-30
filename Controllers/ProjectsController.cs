@@ -8,10 +8,12 @@ namespace WebAPI.Controllers
     [Route("[controller]")]
     public class ProjectsController : Controller
     {
+        private readonly ILogger<ProjectsController> _logger;
         private readonly IProjectRepository _projectRepository;
 
-        public ProjectsController(IProjectRepository projectRepository)
+        public ProjectsController(ILogger<ProjectsController> logger, IProjectRepository projectRepository)
         {
+            _logger = logger;
             _projectRepository = projectRepository;
         }
 
@@ -19,7 +21,21 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<ProjectModel>> GetAll()
         {
-            return Ok(_projectRepository.GetAll());
+            _logger.LogInformation("Retrieving all projects");
+            try
+            {
+                var project = _projectRepository.GetAll();
+                if (!project.Any())
+                {
+                    return Ok("No Projects Exists");
+                }
+                return Ok(project);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving projects");
+                return StatusCode(500);
+            }
         }
 
         [HttpGet("{id}")]
@@ -42,13 +58,15 @@ namespace WebAPI.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (project == null || project.Id != id)
-                {
-                    return NotFound("Cannot Update the Project Details");
-                }
-
-                _projectRepository.Update(project);
+                return BadRequest(ModelState);
             }
+
+            if (project == null || project.Id != id)
+            {
+                return NotFound("Cannot Update the Project Details");
+            }
+
+            _projectRepository.Update(project);
             return Ok("Updated");
         }
 
@@ -57,15 +75,18 @@ namespace WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult Post([FromBody] ProjectEditModel project)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (project == null)
-                {
-                    return BadRequest("Project Cannot Created");
-                }
-
-                _projectRepository.Create(project);
+                return BadRequest(ModelState);
             }
+
+            if (project == null)
+            {
+                return BadRequest("Project Cannot Created");
+            }
+
+            _projectRepository.Create(project);
+            return Ok(CreatedAtAction(nameof(Get), new { id = project.Project.Id }, project));
             return Ok("Project Created");
         }
 

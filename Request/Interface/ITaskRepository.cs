@@ -2,7 +2,7 @@
 
 namespace WebAPI.Request.Interface
 {
-    public interface IProjectRepository
+    public interface ITaskRepository
     {
         public IEnumerable<ProjectModel> GetAll();
         public ProjectModel Get(int Id);

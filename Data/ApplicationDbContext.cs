@@ -11,6 +11,7 @@ namespace WebAPI.Data
         }
 
         public DbSet<ProjectModel> Projects { get; set; }
+        public DbSet<TaskModel> Tasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
