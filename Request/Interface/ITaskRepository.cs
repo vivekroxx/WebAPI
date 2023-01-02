@@ -4,11 +4,11 @@ namespace WebAPI.Request.Interface
 {
     public interface ITaskRepository
     {
-        public IEnumerable<ProjectModel> GetAll();
-        public ProjectModel Get(int Id);
-        public void Update(ProjectModel project);
-        public void Create(ProjectEditModel project);
+        public IEnumerable<TaskModel> GetAll();
+        public TaskModel Get(int Id);
+        public void Update(TaskModel task);
+        public void Create(TaskEditModel task);
         public void Delete(int id);
-        public bool ProjectExists(int id);
+        bool TaskExists(int id);
     }
 }

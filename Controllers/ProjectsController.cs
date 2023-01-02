@@ -8,10 +8,10 @@ namespace WebAPI.Controllers
     [Route("[controller]")]
     public class ProjectsController : Controller
     {
-        private readonly ILogger<ProjectsController> _logger;
+        private readonly ILogger _logger;
         private readonly IProjectRepository _projectRepository;
 
-        public ProjectsController(ILogger<ProjectsController> logger, IProjectRepository projectRepository)
+        public ProjectsController(ILogger logger, IProjectRepository projectRepository)
         {
             _logger = logger;
             _projectRepository = projectRepository;
@@ -86,7 +86,6 @@ namespace WebAPI.Controllers
             }
 
             _projectRepository.Create(project);
-            return Ok(CreatedAtAction(nameof(Get), new { id = project.Project.Id }, project));
             return Ok("Project Created");
         }
 

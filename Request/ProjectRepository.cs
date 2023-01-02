@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebAPI.Data;
 using WebAPI.Model;
 using WebAPI.Request.Interface;
@@ -26,7 +27,12 @@ namespace WebAPI.Request
 
         public ProjectModel Get(int id)
         {
-            return _db.Projects.Find(id);
+            var project = _db.Projects.FirstOrDefault(x => x.Id == id);
+            if (project == null)
+            {
+                return null;
+            }
+            return project;
         }
 
         public void Create(ProjectEditModel project)
